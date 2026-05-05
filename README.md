@@ -188,6 +188,31 @@ Default `replaceExtensions`: `.js, .jsx, .ts, .tsx, .html, .vue, .svelte, .md, .
 
 ## Benchmarks
 
+### Kodak Dataset (Industry Standard)
+
+Evaluated on the [Kodak Lossless True Color Image Suite](http://r0k.us/graphics/kodak/) — the standard benchmark used by [Google's WebP study](https://developers.google.com/speed/webp/docs/webp_study), academic papers, and competing tools. Quality measured using SSIM (Structural Similarity Index), the industry-standard perceptual quality metric.
+
+| Metric | Value |
+|--------|-------|
+| **Average SSIM** | **0.9677** (range: 0.9489–0.9846) |
+| **Average size reduction** | **89.9%** (626 KB → 63 KB) |
+| **Average BPP** | 13.05 → 1.32 |
+| Dataset | 24 images, 768×512, lossless PNG |
+| Quality setting | WebP q=82 (default) |
+
+SSIM > 0.95 is considered high quality; > 0.99 is near-lossless. Our average of 0.9677 indicates excellent perceptual quality with aggressive compression.
+
+**Reference (Google WebP study):** WebP is 25–34% smaller than JPEG at equivalent SSIM, tested on Kodak, Tecnick, and Lenna datasets.
+
+Run the Kodak benchmark yourself:
+
+```bash
+node benchmarks/download-kodak.js   # download 24 Kodak images (one-time)
+node benchmarks/kodak-benchmark.js  # run SSIM + compression benchmarks
+```
+
+### Synthetic benchmarks
+
 Measured with Sharp 0.34 on Node.js v25, Apple Silicon. Run `npm test` to reproduce.
 
 ### Compression ratio (quality=82)
