@@ -119,7 +119,7 @@ async function main() {
       continue;
     }
 
-    // No .webp found — log and skip
+    // No .webp found - log and skip
     skippedImages++;
     console.warn(`  [skip] No .webp for: ${url}`);
     console.warn(`         Expected: ${path.join(config.imagesDir, webpFile)}`);

@@ -52,7 +52,7 @@ async function compressOne(sharp, inputPath, outputPath, { quality, effort }) {
 
   const outputStat = fs.statSync(outputPath);
 
-  // If output is larger than input, discard the WebP — it's not beneficial
+  // If output is larger than input, discard the WebP - it's not beneficial
   if (outputStat.size >= inputStat.size) {
     fs.unlinkSync(outputPath);
     return { ok: false, skipped: true, inputSize: inputStat.size, outputSize: outputStat.size };

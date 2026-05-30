@@ -1,6 +1,6 @@
 {
   "name": "@nometria-ai/img-opt",
-  "version": "2.1.1",
+  "version": "2.1.2",
   "description": "Auto-scan, download, compress (WebP + WebM), and rewrite image & video URLs. Zero config.",
   "type": "module",
   "bin": {

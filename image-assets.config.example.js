@@ -1,7 +1,7 @@
 /**
- * image-assets.config.js — copy this to your project root (optional).
+ * image-assets.config.js - copy this to your project root (optional).
  *
- * img-opt works with ZERO config — it auto-scans your codebase for external
+ * img-opt works with ZERO config - it auto-scans your codebase for external
  * image and video URLs. Use this file only to override defaults.
  *
  * img-opt looks for this file in (in order):
@@ -17,7 +17,7 @@ export default {
   /** Also compress local uncompressed images/videos found in the project (default: true) */
   compressLocal: true,
 
-  /** Patterns to ignore — substring match or /regex/. Applied to URLs and file paths. */
+  /** Patterns to ignore - substring match or /regex/. Applied to URLs and file paths. */
   ignore: [
     // 'cdn.dynamic-api.com',
     // '/user-avatar-\\d+/',
@@ -50,13 +50,13 @@ export default {
     removeOriginals: true,
   },
 
-  /** External images to download (optional — auto-scanned if empty) */
+  /** External images to download (optional - auto-scanned if empty) */
   sources: [
     // { url: 'https://example.com/hero.png',   file: 'hero.png' },
     // { url: 'https://example.com/logo.jpg',   file: 'logo.jpg' },
   ],
 
-  /** External videos to download (optional — auto-scanned if empty) */
+  /** External videos to download (optional - auto-scanned if empty) */
   videoSources: [
     // { url: 'https://example.com/demo.mp4',   file: 'demo.mp4' },
   ],

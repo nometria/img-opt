@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 /**
- * Kodak Dataset Benchmark — Industry-Standard Image Compression Evaluation
+ * Kodak Dataset Benchmark - Industry-Standard Image Compression Evaluation
  *
  * Uses the Kodak Lossless True Color Image Suite (24 images, 768x512)
  * to measure WebP compression performance with SSIM quality metrics.
@@ -11,9 +11,9 @@
  *   - Competing tools (cwebp, imagemin, squoosh)
  *
  * Metrics computed:
- *   - SSIM (Structural Similarity Index) — perceptual quality metric
+ *   - SSIM (Structural Similarity Index) - perceptual quality metric
  *   - Compression ratio (original vs WebP)
- *   - Bits per pixel (bpp) — rate-distortion comparison
+ *   - Bits per pixel (bpp) - rate-distortion comparison
  *
  * SSIM is computed manually from raw pixel data using 8x8 sliding windows
  * following the Wang et al. (2004) algorithm, avoiding external dependencies.
@@ -166,7 +166,7 @@ async function main() {
   fs.mkdirSync(OUTPUT_DIR, { recursive: true });
 
   console.log('='.repeat(80));
-  console.log('Kodak Dataset Benchmark — Industry-Standard Compression Evaluation');
+  console.log('Kodak Dataset Benchmark - Industry-Standard Compression Evaluation');
   console.log('='.repeat(80));
   console.log(`Dataset:  Kodak Lossless True Color Image Suite (24 images, 768x512)`);
   console.log(`Encoder:  Sharp (libvips) WebP at quality=${WEBP_QUALITY}`);

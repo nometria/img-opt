@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 /**
- * img-opt CLI — download, compress, and rewrite image + video assets.
+ * img-opt CLI - download, compress, and rewrite image + video assets.
  *
  * Usage:
  *   npx img-opt               # full pipeline (scan → download → compress → replace)
@@ -42,7 +42,7 @@ const flags = args.filter((a) => FORWARD_FLAGS.includes(a));
 
 if (cmd === '--help' || cmd === '-h' || args.includes('--help') || args.includes('-h')) {
   console.log([
-    'img-opt — download, compress, and rewrite image + video assets',
+    'img-opt - download, compress, and rewrite image + video assets',
     '',
     'Usage:',
     '  npx img-opt                # full pipeline (download → compress → replace)',

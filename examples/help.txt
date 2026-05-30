@@ -1,4 +1,4 @@
-img-opt CLI — run the full image optimization pipeline.
+img-opt CLI - run the full image optimization pipeline.
 
 Usage:
   npx img-opt           # run all 3 steps (download → compress → replace)

@@ -1,7 +1,7 @@
 /**
- * image-assets.config.js — copy this to your project root (optional).
+ * image-assets.config.js - copy this to your project root (optional).
  *
- * img-opt works with ZERO config — it auto-scans your codebase for external
+ * img-opt works with ZERO config - it auto-scans your codebase for external
  * image and video URLs. Use this file only if you want to override defaults
  * or manually specify sources.
  *
@@ -22,7 +22,7 @@ export default {
   compressLocal: true,
 
   /**
-   * Patterns to ignore — skipped in scan, download, and compression.
+   * Patterns to ignore - skipped in scan, download, and compression.
    * Strings use substring match, /regex/ patterns use regex match.
    */
   ignore: [
@@ -60,7 +60,7 @@ export default {
   },
 
   /**
-   * External images to download (optional — auto-scanned if empty).
+   * External images to download (optional - auto-scanned if empty).
    * After compression, every occurrence of `url` in source files
    * is replaced with `/images/<filename>.webp`.
    */
@@ -76,7 +76,7 @@ export default {
   ],
 
   /**
-   * External videos to download (optional — auto-scanned if empty).
+   * External videos to download (optional - auto-scanned if empty).
    * After compression, every occurrence of `url` in source files
    * is replaced with `/videos/<filename>.webm`.
    */

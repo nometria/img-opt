@@ -1,7 +1,7 @@
 /**
  * Resolve image-assets config and project root. Usable from any project.
  * Config path: IMAGE_ASSETS_CONFIG env, or scripts/image-assets.config.js or image-assets.config.js in cwd.
- * Config file is optional — sensible defaults are used when absent (auto-scan kicks in).
+ * Config file is optional - sensible defaults are used when absent (auto-scan kicks in).
  */
 
 import fs from 'fs';
@@ -41,7 +41,7 @@ export async function getConfig() {
     }
   }
 
-  // No config file — return defaults (auto-scan will discover assets)
+  // No config file - return defaults (auto-scan will discover assets)
   if (!configPath) {
     return {
       config: { ...DEFAULTS },

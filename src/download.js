@@ -65,7 +65,7 @@ async function main() {
 
   // Auto-scan if no sources configured
   if (!imageSources.length && !videoSources.length && config.autoScan) {
-    console.log('No sources configured — scanning codebase for external URLs...\n');
+    console.log('No sources configured - scanning codebase for external URLs...\n');
     const scanResult = await scanForUrls({
       projectRoot,
       scanDirs: config.replaceInDirs,

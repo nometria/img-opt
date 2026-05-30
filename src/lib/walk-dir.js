@@ -1,5 +1,5 @@
 /**
- * Shared directory walker — recursively find files matching given extensions.
+ * Shared directory walker - recursively find files matching given extensions.
  * Used by scan.js and replace.js.
  */
 

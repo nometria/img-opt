@@ -1,6 +1,6 @@
 # img-opt
 
-Built by the [Nometria](https://nometria.com) team. We help developers take apps built with AI tools (Lovable, Bolt, Base44, Replit) to production — handling deployment to AWS, security, scaling, and giving you full code ownership. [Learn more →](https://nometria.com)
+Built by the [Nometria](https://nometria.com) team. We help developers take apps built with AI tools (Lovable, Bolt, Base44, Replit) to production - handling deployment to AWS, security, scaling, and giving you full code ownership. [Learn more →](https://nometria.com)
 
 [![npm version](https://img.shields.io/npm/v/%40nometria-ai%2Fimg-opt.svg)](https://www.npmjs.com/package/@nometria-ai/img-opt)
 [![npm downloads](https://img.shields.io/npm/dm/%40nometria-ai%2Fimg-opt.svg)](https://www.npmjs.com/package/@nometria-ai/img-opt)
@@ -19,7 +19,7 @@ Eliminates external media dependencies, cuts image payload by 60-80%, compresses
 # Install
 npm install --save-dev @nometria-ai/img-opt sharp
 
-# Run — that's it. No config file needed.
+# Run - that's it. No config file needed.
 npx img-opt
 ```
 
@@ -29,11 +29,11 @@ img-opt auto-scans your `src/` directory for external image and video URLs, down
 
 ## What's new in v2.1
 
-- **GIF and BMP compression** — `.gif` and `.bmp` files are now compressed to WebP alongside PNG/JPG.
-- **Parallel processing** — image compression runs in parallel (configurable concurrency, default 4) for faster builds.
-- **Smart skip** — if WebP output would be larger than the original (common with high-quality JPEGs), the original is kept.
-- **Configurable effort** — tune the WebP effort level for better compression vs speed tradeoffs.
-- **Compression ratio in output** — see exactly how much each image was reduced.
+- **GIF and BMP compression** - `.gif` and `.bmp` files are now compressed to WebP alongside PNG/JPG.
+- **Parallel processing** - image compression runs in parallel (configurable concurrency, default 4) for faster builds.
+- **Smart skip** - if WebP output would be larger than the original (common with high-quality JPEGs), the original is kept.
+- **Configurable effort** - tune the WebP effort level for better compression vs speed tradeoffs.
+- **Compression ratio in output** - see exactly how much each image was reduced.
 
 ---
 
@@ -49,7 +49,7 @@ npm install --save-dev @nometria-ai/img-opt sharp
 # Windows: choco install ffmpeg
 ```
 
-> `sharp` is a peer dependency for image compression. `ffmpeg` is a system dependency for video compression. Both are optional — the pipeline skips steps gracefully if they're missing.
+> `sharp` is a peer dependency for image compression. `ffmpeg` is a system dependency for video compression. Both are optional - the pipeline skips steps gracefully if they're missing.
 
 ---
 
@@ -116,11 +116,11 @@ Ignored items are excluded from scanning, downloading, and compression.
 
 ### Pipeline
 
-1. **Scan** — auto-discovers external image and video URLs in your source files
-2. **Download** — fetches each URL (follows redirects), saves to `public/images/` and `public/videos/`
-3. **Compress images** — converts PNG/JPG/GIF/BMP to WebP at configured quality using Sharp
-4. **Compress videos** — converts MP4/MOV/AVI to WebM using ffmpeg (VP9 + Opus)
-5. **Replace** — rewrites all URLs in source files (`.png` → `.webp`, `.mp4` → `.webm`, external URLs → local paths)
+1. **Scan** - auto-discovers external image and video URLs in your source files
+2. **Download** - fetches each URL (follows redirects), saves to `public/images/` and `public/videos/`
+3. **Compress images** - converts PNG/JPG/GIF/BMP to WebP at configured quality using Sharp
+4. **Compress videos** - converts MP4/MOV/AVI to WebM using ffmpeg (VP9 + Opus)
+5. **Replace** - rewrites all URLs in source files (`.png` → `.webp`, `.mp4` → `.webm`, external URLs → local paths)
 
 ---
 
@@ -153,7 +153,7 @@ export default {
     // 'cdn.dynamic-api.com',       // substring match
     // '/avatar-\\d+/',             // regex match
   ],
-  // Manual sources (optional — auto-scanned if empty)
+  // Manual sources (optional - auto-scanned if empty)
   sources: [],
   videoSources: [],
 };
@@ -190,7 +190,7 @@ Default `replaceExtensions`: `.js, .jsx, .ts, .tsx, .html, .vue, .svelte, .md, .
 
 ### Kodak Dataset (Industry Standard)
 
-Evaluated on the [Kodak Lossless True Color Image Suite](http://r0k.us/graphics/kodak/) — the standard benchmark used by [Google's WebP study](https://developers.google.com/speed/webp/docs/webp_study), academic papers, and competing tools. Quality measured using SSIM (Structural Similarity Index), the industry-standard perceptual quality metric.
+Evaluated on the [Kodak Lossless True Color Image Suite](http://r0k.us/graphics/kodak/) - the standard benchmark used by [Google's WebP study](https://developers.google.com/speed/webp/docs/webp_study), academic papers, and competing tools. Quality measured using SSIM (Structural Similarity Index), the industry-standard perceptual quality metric.
 
 | Metric | Value |
 |--------|-------|
@@ -238,9 +238,9 @@ Measured with Sharp 0.34 on Node.js v25, Apple Silicon. Run `npm test` to reprod
 | q=50 | 6.5 KB | 89% | Noticeable artifacts |
 | q=65 | 11 KB | 81% | Good for thumbnails |
 | q=75 | 17 KB | 73% | Balanced |
-| **q=82** | **36 KB** | **40%** | **Default — best quality/size tradeoff** |
+| **q=82** | **36 KB** | **40%** | **Default - best quality/size tradeoff** |
 | q=90 | 69 KB | -13% | Larger than original JPEG |
-| q=95 | 114 KB | -87% | Much larger — smart skip kicks in |
+| q=95 | 114 KB | -87% | Much larger - smart skip kicks in |
 
 ### WebP effort level (1920x1080 JPEG)
 

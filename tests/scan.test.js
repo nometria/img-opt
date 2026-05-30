@@ -125,7 +125,7 @@ test('scan detects URLs without file extensions in image contexts', () => {
   }
 });
 
-test('scan respects ignore patterns — skips matching URLs', () => {
+test('scan respects ignore patterns - skips matching URLs', () => {
   const tmpDir = mkTmp();
   // Create config with ignore
   fs.writeFileSync(path.join(tmpDir, 'image-assets.config.js'), `

@@ -23,7 +23,7 @@ export function buildIgnoreFilter(patterns = []) {
     if (rxMatch) {
       return new RegExp(rxMatch[1], rxMatch[2]);
     }
-    // Plain string — do substring match
+    // Plain string - do substring match
     return p;
   });
 

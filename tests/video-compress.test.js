@@ -25,7 +25,7 @@ test('video-compress exits gracefully when no videos dir exists', () => {
 });
 
 test('video-compress shows helpful message when ffmpeg is missing', () => {
-  // This test is platform-dependent — if ffmpeg IS installed, it won't show the error.
+  // This test is platform-dependent - if ffmpeg IS installed, it won't show the error.
   // We just verify the script doesn't crash with an unhandled exception.
   const tmpDir = fs.mkdtempSync(path.join(os.tmpdir(), 'img-opt-video-'));
   const videosDir = path.join(tmpDir, 'public', 'videos');

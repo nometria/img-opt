@@ -19,7 +19,7 @@ test('regex pattern matches correctly', () => {
   assert.equal(shouldIgnore('/images/avatar-abc.png'), false);
 });
 
-test('multiple patterns — any match returns true', () => {
+test('multiple patterns - any match returns true', () => {
   const shouldIgnore = buildIgnoreFilter(['skip-me', '/^dynamic/']);
   assert.equal(shouldIgnore('https://example.com/skip-me.jpg'), true);
   assert.equal(shouldIgnore('dynamic-content.png'), true);

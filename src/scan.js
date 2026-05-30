@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 /**
- * scan.js — auto-discover external image and video URLs in the codebase.
+ * scan.js - auto-discover external image and video URLs in the codebase.
  * Replaces the manual `sources` config for most projects.
  *
  * Usage:
@@ -23,27 +23,27 @@ const VIDEO_EXTS = new Set(['mp4', 'mov', 'avi', 'webm', 'mkv', 'm4v']);
 // context: 'image' means the URL is in an image context (img src, css url, markdown image)
 //          'video' means video context (<video src, <source src)
 //          'media' means either (poster, data-src)
-//          undefined means no context hint — rely on extension matching only
+//          undefined means no context hint - rely on extension matching only
 const URL_PATTERNS = [
-  // <img src="...">, <Image src="..."> — image context
+  // <img src="...">, <Image src="..."> - image context
   { rx: /<(?:img|Image)\s[^>]*?src\s*=\s*["'](https?:\/\/[^"'\s>]+)/gi, context: 'image' },
 
-  // <video src="...">, <source src="..."> — video context
+  // <video src="...">, <source src="..."> - video context
   { rx: /<(?:video|source)\s[^>]*?src\s*=\s*["'](https?:\/\/[^"'\s>]+)/gi, context: 'video' },
 
-  // Generic src="...", poster="...", data-src="..." — media context
+  // Generic src="...", poster="...", data-src="..." - media context
   { rx: /(?:src|poster|data-src)\s*=\s*["'](https?:\/\/[^"'\s>]+)/gi, context: 'media' },
 
   // srcset entries
   { rx: /srcset\s*=\s*["']([^"']+)/gi, context: 'image' },
 
-  // CSS url(...) — image context (backgrounds, etc.)
+  // CSS url(...) - image context (backgrounds, etc.)
   { rx: /url\(\s*["']?(https?:\/\/[^"')\s]+)/gi, context: 'image' },
 
-  // Markdown images: ![alt](url) — image context
+  // Markdown images: ![alt](url) - image context
   { rx: /!\[[^\]]*\]\((https?:\/\/[^)\s]+)\)/gi, context: 'image' },
 
-  // Bare string literals with known asset extensions — no context hint
+  // Bare string literals with known asset extensions - no context hint
   { rx: /["'`](https?:\/\/[^"'`\s]+\.(?:png|jpe?g|gif|svg|webp|avif|bmp|ico|mp4|mov|avi|webm|mkv|m4v)(?:\?[^"'`\s]*)?)/gi, context: undefined },
 ];
 
@@ -74,7 +74,7 @@ export function urlToFilename(url) {
     name = name.replace(/[^a-zA-Z0-9._-]/g, '-');
     // Collapse multiple hyphens
     name = name.replace(/-{2,}/g, '-');
-    // Ensure it has an extension — guess from query or default
+    // Ensure it has an extension - guess from query or default
     if (!path.extname(name)) {
       const ext = urlExtension(url);
       name += ext ? `.${ext}` : '.png';
