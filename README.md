@@ -118,7 +118,7 @@ Ignored items are excluded from scanning, downloading, and compression.
 
 1. **Scan** - auto-discovers external image and video URLs in your source files
 2. **Download** - fetches each URL (follows redirects), saves to `public/images/` and `public/videos/`
-3. **Compress images** - converts PNG/JPG/GIF/BMP to WebP at configured quality using Sharp
+3. **Compress images** - converts PNG/JPG/GIF/BMP to WebP (or AVIF/JPEG/PNG) at configured quality using Sharp
 4. **Compress videos** - converts MP4/MOV/AVI to WebM using ffmpeg (VP9 + Opus)
 5. **Replace** - rewrites all URLs in source files (`.png` → `.webp`, `.mp4` → `.webm`, external URLs → local paths)
 
@@ -170,9 +170,9 @@ export default {
 | `videosDir` | string | `'public/videos'` | Directory where videos are saved |
 | `replaceInDirs` | string[] | `['src']` | Directories scanned for URL replacement |
 | `replaceExtensions` | string[] | see below | File extensions to scan |
-| `compress.format` | `'webp'` \| `'jpeg'` \| `'png'` | `'webp'` | Output image format |
+| `compress.format` | `'webp'` \| `'avif'` \| `'jpeg'` \| `'png'` | `'webp'` | Output image format. AVIF gives the smallest files; WebP is the safest broad-support default |
 | `compress.quality` | number | `82` | Image compression quality (1-100) |
-| `compress.effort` | number | `undefined` | WebP effort level (0-6). Higher = smaller files but slower. Default uses Sharp's default (4) |
+| `compress.effort` | number | `undefined` | Effort level (0-6) for WebP/AVIF. Higher = smaller files but slower. Default uses Sharp's default (4). Ignored for `jpeg`/`png` |
 | `compress.concurrency` | number | `4` | Number of images to compress in parallel |
 | `compress.removeOriginals` | boolean | `true` | Delete source files after converting |
 | `videoCompress.format` | string | `'webm'` | Output video format |

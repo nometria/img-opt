@@ -25,6 +25,22 @@ import { buildIgnoreFilter } from './lib/ignore.js';
 const IMAGE_EXT = ['.png', '.jpg', '.jpeg', '.gif', '.bmp'];
 const IMAGE_SCAN_EXT = ['.png', '.jpg', '.jpeg', '.gif', '.bmp'];
 
+// Supported output formats and the file extension each produces.
+// `effort` is honoured for the modern codecs (webp/avif) that accept it.
+const FORMATS = {
+  webp: { ext: '.webp', supportsEffort: true },
+  avif: { ext: '.avif', supportsEffort: true },
+  jpeg: { ext: '.jpg', supportsEffort: false },
+  png:  { ext: '.png', supportsEffort: false },
+};
+
+/** Normalise a requested format string to a supported codec (defaults to webp). */
+function resolveFormat(format) {
+  const f = String(format || 'webp').toLowerCase();
+  const key = f === 'jpg' ? 'jpeg' : f;
+  return FORMATS[key] ? key : 'webp';
+}
+
 /**
  * Find all uncompressed image files in given directories (recursively).
  * Skips files that already have a .webp sibling.
@@ -43,12 +59,13 @@ function findLocalImages(dirs, projectRoot) {
  * Compress a single image to WebP.
  * Returns { ok, skipped, inputSize, outputSize } or throws on error.
  */
-async function compressOne(sharp, inputPath, outputPath, { quality, effort }) {
+async function compressOne(sharp, inputPath, outputPath, { quality, effort, format }) {
   const inputStat = fs.statSync(inputPath);
+  const fmt = resolveFormat(format);
   const opts = { quality };
-  if (effort !== undefined) opts.effort = effort;
+  if (effort !== undefined && FORMATS[fmt].supportsEffort) opts.effort = effort;
 
-  await sharp(inputPath).webp(opts).toFile(outputPath);
+  await sharp(inputPath)[fmt](opts).toFile(outputPath);
 
   const outputStat = fs.statSync(outputPath);
 
@@ -64,7 +81,7 @@ async function compressOne(sharp, inputPath, outputPath, { quality, effort }) {
 /**
  * Process a batch of files with a given concurrency limit.
  */
-async function processBatch(sharp, items, { quality, effort, removeOriginals, concurrency }) {
+async function processBatch(sharp, items, { quality, effort, format, removeOriginals, concurrency }) {
   let completed = 0;
   let skipped = 0;
 
@@ -73,10 +90,10 @@ async function processBatch(sharp, items, { quality, effort, removeOriginals, co
     const results = await Promise.all(
       batch.map(async ({ inputPath, outputPath, displayName }) => {
         try {
-          const result = await compressOne(sharp, inputPath, outputPath, { quality, effort });
+          const result = await compressOne(sharp, inputPath, outputPath, { quality, effort, format });
 
           if (result.skipped) {
-            console.log(`  ${displayName} -> SKIPPED (WebP would be larger)`);
+            console.log(`  ${displayName} -> SKIPPED (output would be larger)`);
             return { ok: false, skipped: true };
           }
 
@@ -108,6 +125,8 @@ async function main() {
   const compressOpt = config.compress || {};
   const quality = compressOpt.quality ?? 82;
   const effort = compressOpt.effort; // undefined = sharp default (4)
+  const format = resolveFormat(compressOpt.format);
+  const outExt = FORMATS[format].ext;
   const removeOriginals = compressOpt.removeOriginals !== false;
   const concurrency = compressOpt.concurrency ?? 4;
   const shouldIgnore = buildIgnoreFilter(config.ignore);
@@ -138,12 +157,12 @@ async function main() {
         const base = path.basename(file, ext);
         return {
           inputPath: path.join(imagesDir, file),
-          outputPath: path.join(imagesDir, `${base}.webp`),
+          outputPath: path.join(imagesDir, `${base}${outExt}`),
           displayName: file,
         };
       });
 
-      const result = await processBatch(sharp, items, { quality, effort, removeOriginals, concurrency });
+      const result = await processBatch(sharp, items, { quality, effort, format, removeOriginals, concurrency });
       downloadedCount = result.completed;
       downloadedSkipped = result.skipped;
     }
@@ -162,9 +181,9 @@ async function main() {
       if (f.startsWith(imagesDir + path.sep) || f.startsWith(imagesDir + '/')) return false;
       const rel = path.relative(projectRoot, f);
       if (shouldIgnore(rel) || shouldIgnore(f)) return false;
-      // Skip if a .webp sibling already exists
-      const webpSibling = f.replace(/\.[^.]+$/, '.webp');
-      if (fs.existsSync(webpSibling)) return false;
+      // Skip if a compressed sibling in the target format already exists
+      const compressedSibling = f.replace(/\.[^.]+$/, outExt);
+      if (fs.existsSync(compressedSibling)) return false;
       return true;
     });
 
@@ -177,12 +196,12 @@ async function main() {
         const dir = path.dirname(inputPath);
         return {
           inputPath,
-          outputPath: path.join(dir, `${base}.webp`),
+          outputPath: path.join(dir, `${base}${outExt}`),
           displayName: path.relative(projectRoot, inputPath),
         };
       });
 
-      const result = await processBatch(sharp, items, { quality, effort, removeOriginals, concurrency });
+      const result = await processBatch(sharp, items, { quality, effort, format, removeOriginals, concurrency });
       localCount = result.completed;
       localSkipped = result.skipped;
     }
@@ -193,9 +212,9 @@ async function main() {
   if (total === 0 && totalSkipped === 0) {
     console.log('No uncompressed images found (.png, .jpg, .jpeg, .gif, .bmp).');
   } else {
-    console.log(`\nDone. Compressed ${total} image(s) to WebP.`);
+    console.log(`\nDone. Compressed ${total} image(s) to ${format.toUpperCase()}.`);
     if (totalSkipped > 0) {
-      console.log(`Skipped ${totalSkipped} image(s) where WebP would be larger than the original.`);
+      console.log(`Skipped ${totalSkipped} image(s) where ${format.toUpperCase()} would be larger than the original.`);
     }
   }
 }

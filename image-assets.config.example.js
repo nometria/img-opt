@@ -37,8 +37,9 @@ export default {
 
   /** Image compression settings (requires sharp: npm i -D sharp) */
   compress: {
-    format: 'webp',
+    format: 'webp',        // 'webp' | 'avif' | 'jpeg' | 'png'
     quality: 82,
+    // effort: 4,          // webp/avif only: 0-6, higher = smaller but slower
     removeOriginals: true,
   },
 
